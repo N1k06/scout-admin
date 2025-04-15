@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /
+
+# Reindirizzamento delle API
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ public/index.php/$1 [L,QSA]
+
+# Blocco accesso diretto a tutte le directory tranne public
+RewriteRule ^(?!public/).* - [L,R=404]
