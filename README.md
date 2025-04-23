@@ -33,3 +33,9 @@ Questo script:
 ## Integrazione con Github
 Se il push automatico fallisce, loggarsi manualmente da terminale con `gh auth login`, e successivamente dare `git push` sempre dalla shell.
 Può essere d'aiuto resettare l'istanza dopo aver eseguito il login da terminale.
+
+## Lanciare terminale dentro un container
+In certi casi può essere utile eseguire dei comandi dal terminale dentro ai container. In tal caso, dopo aver preso gli id o i nomi dei container con `docker ps`, eseguire
+`docker exec -it <container-name-or-id> bash`
+Di solito il nome è il seguente:
+`docker exec -it docker-xammp-ws-php-app-1 bash`
