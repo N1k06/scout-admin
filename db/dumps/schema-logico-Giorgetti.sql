@@ -3,11 +3,9 @@ CREATE TABLE Persona (
     id_persona INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
-    data_nascita DATE NOT NULL,
-    luogo_nascita VARCHAR(50),
-    citta_residenza VARCHAR(50),
-    cap_residenza VARCHAR(10),
-    telefono VARCHAR(15),
+    data_nascita DATE NOT NULL, -- tolto il luogo di nascita, info poco importante
+    via_residenza VARCHAR(50) NOT NULL, -- aggregati gli attributi relativi alla residenza in un attributo solo
+    telefono VARCHAR(15) NOT NULL,
     id_tutore1 INT DEFAULT NULL,
     id_tutore2 INT DEFAULT NULL,
     FOREIGN KEY (id_tutore1) REFERENCES Persona(id_persona) ON DELETE SET NULL,
