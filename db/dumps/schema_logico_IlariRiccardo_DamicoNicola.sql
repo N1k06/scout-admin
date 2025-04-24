@@ -50,7 +50,7 @@ CREATE TABLE Tipologia (
 -- Tabella Unità
 CREATE TABLE Unita (
     id_unita INT AUTO_INCREMENT PRIMARY KEY,
-    nome_branca VARCHAR(50) NOT NULL
+    id_branca int NOT NULL
 );
 
 -- Tabella Branca
@@ -66,7 +66,7 @@ CREATE TABLE Iter (
     id_iter INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     descrizione TEXT,
-    nome_branca VARCHAR(50) NOT NULL
+    id_branca int NOT NULL
 );
 
 -- tabelle relazioni
