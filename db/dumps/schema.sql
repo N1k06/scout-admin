@@ -1,3 +1,9 @@
+-- ricrea da zero tutto il db a prescindere
+USE root_db;
+DROP DATABASE root_db;
+CREATE DATABASE root_db;
+USE root_db;
+
 -- Tabella Account
 CREATE TABLE Account (
     username VARCHAR(50) PRIMARY KEY,
