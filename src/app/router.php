@@ -32,8 +32,16 @@ function router($method, $uri, $routes) {
 }
 
 
-function insert_unità(){
-    
+function insert_unita(){
+    include 'db.php';
+    $sql=;
+    $result = $conn->query($sql);
+    $data = [];
+    if($result -> num_row > 0){
+        while($row = $result -> fetch_assocc()){
+
+        }
+    }
 }
 
 

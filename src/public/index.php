@@ -12,6 +12,8 @@ $routes = [
     ],
     'POST' => [
         '/api/auth' => 'gestisci_autenticazione',
+        '/api/articoli' => 'crea_articolo',
+        '/api/unita' => 'insert_unita'
     ],
 ];
 
