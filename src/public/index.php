@@ -7,11 +7,11 @@ $routes = [
         '/api/articoli/{categoria}' => 'gestisci_articoli_per_categoria',
         '/api/articoli/{categoria}/{sottocategoria}' => 'gestisci_articoli_per_sottocategoria',
         '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'gestisci_articolo',
+        
         '/api/unita' => 'read_unita'
     ],
     'POST' => [
         '/api/auth' => 'gestisci_autenticazione',
-        '/api/articoli' => 'crea_articolo',
     ],
 ];
 
