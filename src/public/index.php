@@ -15,6 +15,9 @@ $routes = [
         '/api/articoli' => 'crea_articolo',
         '/api/unita' => 'insert_unita'
     ],
+    'PUT' => [
+        '/api/unita/{id_unita}' => 'update_unita'
+    ]
 ];
 
 $method = $_SERVER['REQUEST_METHOD'];
