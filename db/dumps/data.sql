@@ -9,3 +9,4 @@ INSERT INTO Branca (nome_branca, min_eta, max_eta) VALUES
 ('Rover', 16, 20),
 ('Scolte', 16, 20),
 ('RS', 21, 150);
+                                
