@@ -1,16 +1,20 @@
 <?php
 require_once '../app/router.php';
 
-$routes = [
-    'GET' => [
-        '/api/articoli' => 'gestisci_elenco_articoli',
-        '/api/articoli/{categoria}' => 'gestisci_articoli_per_categoria',
-        '/api/articoli/{categoria}/{sottocategoria}' => 'gestisci_articoli_per_sottocategoria',
-        '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'gestisci_articolo',
+$routes = 
+[
+    'GET' => 
+    [
+        '/api/persone' => 'gestisci_elenco_persone',
+        '/api/persone/{id}' => 'gestisci_persone_per_id',
     ],
-    'POST' => [
-        '/api/auth' => 'gestisci_autenticazione',
-        '/api/articoli' => 'crea_articolo',
+    'POST' => 
+    [
+        '/api/persone' => 'inserimento_persone',
+    ],
+    'PUT' => 
+    [
+        '/api/persone/{id}' => 'gestisci_persona',
     ],
 ];
 
