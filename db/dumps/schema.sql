@@ -56,6 +56,7 @@ CREATE TABLE Tipologia (
 -- Tabella Unità
 CREATE TABLE Unita (
     id_unita INT AUTO_INCREMENT PRIMARY KEY,
+    nome_unita VARCHAR(200),
     id_branca int NOT NULL
 );
 

@@ -32,16 +32,10 @@ function router($method, $uri, $routes) {
 }
 
 
-function insert_unita(){
+function insert_unita($nome_unita){
     include 'db.php';
-    $sql=;
+    $sql= "INSERT INTO Unita (nome_unita) VALUES('$nome_unita')";
     $result = $conn->query($sql);
-    $data = [];
-    if($result -> num_row > 0){
-        while($row = $result -> fetch_assocc()){
-
-        }
-    }
 }
 
 
