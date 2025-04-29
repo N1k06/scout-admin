@@ -31,6 +31,12 @@ function router($method, $uri, $routes) {
     gestisci_richiesta_non_valida();
 }
 
+
+function insert_unità(){
+    
+}
+
+
 function gestisci_elenco_articoli() {
     echo "Elenco degli articoli";
 }
