@@ -30,7 +30,10 @@ echo "MariaDB setup complete."
 
 # Importa lo schema e i dati del database
 docker exec -i scout-admin-db-1 mariadb -u root -proot <./db/dumps/schema.sql
-echo "DB schema loaded."
+echo "DB all schema loaded."
 
 docker exec -i scout-admin-db-1 mariadb -u root -proot <./db/dumps/data.sql
-echo "DB populated."
+echo "DB \"branca\" populated."
+
+docker exec -i scout-admin-db-1 mariadb -u root -proot <./db/dumps/pop-iter.sql
+echo "DB \"iters\" populated."
