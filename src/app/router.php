@@ -59,3 +59,7 @@ function gestisci_richiesta_non_valida() {
 function gestisci_autenticazione() {
     echo "Autenticazione";
 }
+
+function read_unita(){
+    
+}
