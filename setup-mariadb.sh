@@ -33,7 +33,4 @@ docker exec -i scout-admin-db-1 mariadb -u root -proot <./db/dumps/schema.sql
 echo "DB all schema loaded."
 
 docker exec -i scout-admin-db-1 mariadb -u root -proot <./db/dumps/data.sql
-echo "DB \"branca\" populated."
-
-docker exec -i scout-admin-db-1 mariadb -u root -proot <./db/dumps/pop-iter.sql
-echo "DB \"iters\" populated."
+echo "DB populated."

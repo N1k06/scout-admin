@@ -56,6 +56,21 @@ function gestisci_richiesta_non_valida() {
     echo "Risorsa non trovata";
 }
 
-function gestisci_autenticazione() {
-    echo "Autenticazione";
+function gestisci_attivita($id_attivita) 
+{
+    require_once "db.php";
+
+    $query = "SELECT * FROM attività NATURAL JOIN persona NATURAL JOIN partecipa NATURAL JOIN unita NATURAL JOIN branca WHERE id_attivita = $id_attivita";
+    $result = mysqli_query($conn, $query);
+
+    if($result)
+    {
+        $data = [];
+        while($row = mysqli_fetch_assoc($result))
+            $data[] = $row;
+        echo json_encode($data);
+        return;
+    }
+
+    echo json_encode("error");
 }
