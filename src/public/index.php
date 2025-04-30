@@ -11,7 +11,15 @@ $routes = [
     'POST' => [
         '/api/auth' => 'gestisci_autenticazione',
         '/api/articoli' => 'crea_articolo',
+        '/api/signup' => 'gestisci_signup'
+        '/api/login' => 'gestisci_login'
     ],
+    'PUT' => [
+        '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'modifica_articolo'
+    ],
+    'DELETE' => [
+        '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'elimina_articolo'
+    ]
 ];
 
 $method = $_SERVER['REQUEST_METHOD'];
