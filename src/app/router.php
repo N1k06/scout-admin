@@ -59,15 +59,18 @@ function gestisci_richiesta_non_valida() {
 
 function gestisci_attivita($id_attivita) 
 {
-    $query = "SELECT * FROM attività NATURAL JOIN persona NATURAL JOIN partecipa NATURAL JOIN unita NATURAL JOIN branca WHERE id_attivita = $id_attivita";
-    $result = mysqli_query($conn, $query);
+    global $conn;
+
+    $stmt = $conn->prepare("SELECT * FROM attività NATURAL JOIN persona NATURAL JOIN partecipa NATURAL JOIN unita NATURAL JOIN branca WHERE id_attivita = :id");
+    $stmt->bindParam(':id', $id_attivita, PDO::PARAM_INT);
+
+    // Esegui
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if($result)
     {
-        $data = [];
-        while($row = mysqli_fetch_assoc($result))
-            $data[] = $row;
-        echo json_encode($data);
+        echo json_encode($result);
         return;
     }
 
@@ -91,9 +94,10 @@ function gestisci_signup()
         isset($_POST['via_residenza']) &&
         isset($_POST['citta_residenza']) &&
         isset($_POST['cap_residenza']) &&
-        iseet($_POST['telefono']))
-        
+        isset($_POST['telefono'])) 
     {
+        global $conn;
+
         $nome = $_POST['nome'];
         $cognome = $_POST['cognome'];
         $email = $_POST['email'];
@@ -106,16 +110,59 @@ function gestisci_signup()
         $cap_residenza = $_POST['cap_residenza'];
         $telefono = $_POST['telefono'];
 
-        $query = "insert into Persona (nome, cognome, data_nascita, luogo_nascita, via_residenza, citta_residenza, cap_residenza, telefono) value ('$nome', '$cognome', '$data_nascita', '$luogo_nascita', '$via_residenza', '$citta_residenza', '$cap_residenza', '$telefono')";
-        $result = $conn->query($query);
+        // Prepariamo la query per inserire la persona
+        $query = "INSERT INTO Persona (nome, cognome, data_nascita, luogo_nascita, via_residenza, citta_residenza, cap_residenza, telefono) 
+                  VALUES (:nome, :cognome, :data_nascita, :luogo_nascita, :via_residenza, :citta_residenza, :cap_residenza, :telefono)";
+        
+        // Prepara la query
+        $stmt = $conn->prepare($query);
 
-        if($result)
-        {
-            $insert_id = $conn->insert_id;
+        // Associa i parametri alla query
+        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+        $stmt->bindParam(':cognome', $cognome, PDO::PARAM_STR);
+        $stmt->bindParam(':data_nascita', $data_nascita, PDO::PARAM_STR);
+        $stmt->bindParam(':luogo_nascita', $luogo_nascita, PDO::PARAM_STR);
+        $stmt->bindParam(':via_residenza', $via_residenza, PDO::PARAM_STR);
+        $stmt->bindParam(':citta_residenza', $citta_residenza, PDO::PARAM_STR);
+        $stmt->bindParam(':cap_residenza', $cap_residenza, PDO::PARAM_STR);
+        $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
 
+        // Esegui la query
+        $stmt->execute();
+
+        // Se l'inserimento nella tabella Persona ha successo, inseriamo nell'Account
+        if ($stmt->rowCount() > 0) {
+            $insert_id = $conn->lastInsertId();
+
+            // Hash della password
             $hash = password_hash($password, PASSWORD_DEFAULT);
-            $query = "insert into Account (email, password, username, id_persona) value ('$email', '$hash', '$username', '$insert_id')";
-            $result = $conn->query($query);
+
+            // Prepara la query per l'inserimento dell'account
+            $query = "INSERT INTO Account (email, password, username, id_persona) 
+                      VALUES (:email, :password, :username, :id_persona)";
+
+            // Prepara la query
+            $stmt = $conn->prepare($query);
+
+            // Associa i parametri alla query
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $hash, PDO::PARAM_STR);
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->bindParam(':id_persona', $insert_id, PDO::PARAM_INT);
+
+            // Esegui la query
+            $stmt->execute();
+
+            // Verifica se l'inserimento nell'account è andato a buon fine
+            if ($stmt->rowCount() > 0) {
+                echo json_encode("Successo");
+                return;
+            }
         }
+
+        echo json_encode("Errore nell'inserimento dei dati");
+    } 
+    else {
+        echo json_encode("Dati mancanti");
     }
 }
