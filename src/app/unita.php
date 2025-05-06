@@ -55,9 +55,9 @@
             return;
         }
 
-        $nome = $_POST['Nome'];
-        $sql = 'UPDATE Unita SET Nome = ? WHERE id = ?';
-        $stmt = $conn->prepare($sql);
+    $nome = $_POST['Nome'];
+    $sql = 'UPDATE Unita SET nome_unita = ? WHERE id_unita  = ?';
+    $stmt = $conn->prepare($sql);
 
         if ($stmt === false) {
             http_response_code(500);
@@ -65,8 +65,8 @@
             return;
         }
 
-        $stmt->bind_param('si', $nome, $id_unita);
-        $successo = $stmt->execute();
+    $stmt->bind_param('si', $nome_unita, $id_unita);
+    $successo = $stmt->execute();
 
         if ($successo) {
             echo json_encode(['stato' => 'ok', 'messaggio' => 'Unità aggiornata']);
