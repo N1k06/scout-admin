@@ -1,6 +1,6 @@
 <?php
 require_once '../app/router.php';
-require_once '../app/db.php'; //per l'accesso al database
+require '../app/unita.php';
 
 $routes = [
     'GET' => [

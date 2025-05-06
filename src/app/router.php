@@ -32,11 +32,6 @@ function router($method, $uri, $routes) {
     gestisci_richiesta_non_valida();
 }
 
-require 'unita.php';
-
-
-
-
 function gestisci_elenco_articoli() {
     echo "Elenco degli articoli";
 }
