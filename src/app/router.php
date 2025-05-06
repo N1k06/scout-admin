@@ -94,7 +94,34 @@
     //PUT
     function gestisci_persona($id) 
     {
-        echo "Creazione di un nuovo articolo";
+        if(isset($_POST['nome']) || isset($_POST['cognome']) || isset($_POST['telefono']) || isset($_POST['via_residenza']) || isset($_POST['citta_residenza']) || isset($_POST['cap_residenza']))
+        {
+            require_once("db.php");
+            $stmt = $conn->prepare("SELECT nome, cognome, telefono, via_residenza, città_residenza, cap_residenza FROM Persone WHERE id = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            aux = array();
+            while ($row = $result->fetch_assoc()) 
+            {
+                aux[] = $row;
+            }
+
+            foreach($_POST as $key => $value)
+            {
+                if(isset(aux[$key]))
+                {
+                    aux[$key] = $_POST[$key];
+                }
+            }
+
+            $stmt = $conn->prepare("UPDATE Persone SET nome = ?, cognome = ?, telefono = ?, via_residenza = ?, citta_residenza = ?, cap_residenza = ? WHERE id = ?");
+            $stmt->bind_param("sssssi", aux['nome'], aux['cognome'], aux['telefono'], aux['via_residenza'], aux['citta_residenza'], aux['cap_residenza'], $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        }
+        
     }
 
     function gestisci_richiesta_non_valida() 
@@ -102,3 +129,7 @@
         http_response_code(404);
         echo "Risorsa non trovata";
     }
+?>
+
+
+
