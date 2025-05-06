@@ -47,34 +47,58 @@
     }
 
     function update_unita($id_unita) {
-        
-
-        if (!isset($_POST['Nome'])) {
+        include 'db.php';
+    
+        $rawData = file_get_contents("php://input");
+        $data = json_decode($rawData, true);
+    
+        if (!isset($data['nome_unita'])) {
             http_response_code(400);
-            echo json_encode(['errore' => 'Campo Nome mancante']);
+            echo json_encode(['errore' => 'Campo nome_unita mancante']);
             return;
         }
-
-    $nome = $_POST['Nome'];
-    $sql = 'UPDATE Unita SET nome_unita = ? WHERE id_unita  = ?';
-    $stmt = $conn->prepare($sql);
-
-        if ($stmt === false) {
-            http_response_code(500);
-            echo json_encode(['errore' => 'Errore nella preparazione della query']);
+    
+        if (!isset($data['id_branca'])) {
+            http_response_code(400);
+            echo json_encode(['errore' => 'Campo id_branca mancante']);
             return;
         }
+    
+        $nome_unita = $data['nome_unita'];
+        $id_branca = $data['id_branca'];
 
-    $stmt->bind_param('si', $nome_unita, $id_unita);
-    $successo = $stmt->execute();
+        
+        $sql_controll = "SELECT id_unita FROM Unita WHERE id_unita = '$id_unita'";
+        $result = $conn->query($sql_controll);
 
-        if ($successo) {
-            echo json_encode(['stato' => 'ok', 'messaggio' => 'Unità aggiornata']);
+        if ($result->num_rows == 0) {
+            http_response_code(400);
+            echo json_encode(['errore' => 'Id_unita non esistente']);
+
         } else {
-            http_response_code(500);
-            echo json_encode(['errore' => 'Aggiornamento fallito']);
-        }
 
-        $stmt->close();
-        $conn->close();
+            $sql = 'UPDATE Unita SET nome_unita = ?, id_branca = ? WHERE id_unita = ?';
+            $stmt = $conn->prepare($sql);
+    
+            if ($stmt === false) {
+                http_response_code(500);
+                echo json_encode(['errore' => 'Errore nella preparazione della query']);
+                return;
+            }
+    
+            $stmt->bind_param('sii', $nome_unita, $id_branca, $id_unita);
+            $successo = $stmt->execute();
+    
+            if ($successo) {
+            echo json_encode(['stato' => 'ok', 'messaggio' => 'Unità aggiornata']);
+            } else {
+                http_response_code(500);
+                echo json_encode(['errore' => 'Aggiornamento fallito']);
+            }
+    
+            $stmt->close();
+            $conn->close();
+        }
     }
+    
+        
