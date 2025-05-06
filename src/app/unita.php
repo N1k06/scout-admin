@@ -1,5 +1,4 @@
 <?php
-    include 'db.php';
 
 
     function insert_unita(){ 
@@ -33,7 +32,7 @@
     }
 
     function read_unita(){
-        
+        include 'db.php';
         $sql = "SELECT * FROM Unita";
         $result = $connection->query($sql);
         $data = [];

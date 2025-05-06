@@ -13,7 +13,7 @@ $routes = [
     'POST' => [
         '/api/auth' => 'gestisci_autenticazione',
         '/api/articoli' => 'crea_articolo',
-        '/api/unita/{nome_unita}' => 'insert_unita'
+        '/api/unita' => 'insert_unita'
     ],
     'PUT' => [
         '/api/unita/{id_unita}' => 'update_unita'
