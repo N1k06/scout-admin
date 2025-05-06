@@ -59,3 +59,13 @@ function gestisci_richiesta_non_valida() {
 function gestisci_autenticazione() {
     echo "Autenticazione";
 }
+
+function update_articolo(){
+    //prova parsing body della richiesta su PUT usando request_parse_body
+    //richiesto php >= 8.4 
+    //evita di gestire manualmente lo stream da php://input
+    //vedi https://www.php.net/manual/en/function.request-parse-body.php
+    [$_POST, $_FILES] = request_parse_body();
+    var_dump($_POST);
+    var_dump($_FILES);
+}

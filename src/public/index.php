@@ -1,5 +1,6 @@
 <?php
 require_once '../app/router.php';
+//phpinfo();
 
 $routes = [
     'GET' => [
@@ -12,6 +13,9 @@ $routes = [
         '/api/auth' => 'gestisci_autenticazione',
         '/api/articoli' => 'crea_articolo',
     ],
+    'PUT' => [
+        '/api/articoli' => 'update_articolo'
+    ]
 ];
 
 $method = $_SERVER['REQUEST_METHOD'];
