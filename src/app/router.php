@@ -1,4 +1,5 @@
 <?php
+require_once 'db.php';
 
 function router($method, $uri, $routes) {
     $uri = urldecode($uri);

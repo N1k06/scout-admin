@@ -1,4 +1,6 @@
 <?php
+require_once 'db.php';
+
 function insert_unita($nome_unita){
     include 'db.php';
     $sql= "INSERT INTO Unita (nome_unita) VALUES('$nome_unita')";
@@ -6,9 +8,9 @@ function insert_unita($nome_unita){
 }
 
 function read_unita(){
-    require_once 'db.php';
+    include 'db.php';
     $sql = "SELECT * FROM Unita";
-    $result = $connection->query($sql);
+    $result = $conn->query($sql);
     $data = [];
     if ($result->num_rows > 0) 
     {
@@ -21,7 +23,6 @@ function read_unita(){
 }
 
 function update_unita($id_unita) {
-    require_once 'db.php';
 
     if (!isset($_POST['Nome'])) {
         http_response_code(400);
