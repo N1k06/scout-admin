@@ -1,28 +1,31 @@
 <?php
-
-
     function insert_tipologia(){ 
         include 'db.php';
 
         
-        if (!isset($_POST['nome_unita'])) {
+        if (!isset($_POST['nome'])) {
             http_response_code(400);
             echo json_encode(['errore' => 'Campo Nome mancante']);
             return;
         }
-        $nome_unita = $_POST['nome_unita']; 
         
-
-        // Controlla se il nome esiste già
-        $sql = "SELECT nome_unita FROM Unita WHERE nome_unita = '$nome_unita'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
+        $nome = $_POST['nome'];
+        $descrizione = isset($_POST['descrizione']) ? $_POST['descrizione'] : null;
+    
+        // Controlla se il nome esiste già usando prepared statement
+        $stmt = $conn->prepare("SELECT nome FROM Tipologia WHERE nome = ?");
+        $stmt->bind_param("s", $nome);
+        $stmt->execute();
+        $stmt->store_result();
+    
+        if ($stmt->num_rows > 0) {
             echo json_encode(['errore' => 'Nome già esistente']);
         } else {
             // Inserisce il nuovo valore
-            $sql_insert = "INSERT INTO Unita (nome_unita, id_branca) VALUES('$nome_unita', 1)";
-            if ($conn->query($sql_insert) === TRUE) {
+            $stmt_insert = $conn->prepare("INSERT INTO Tipologia (nome, descrizione) VALUES (?, ?)");
+            $stmt_insert->bind_param("ss", $nome, $descrizione);
+
+            if ($conn->query($stmt_insert) === TRUE) {
                 echo json_encode(['stato' => 'ok', 'messaggio' => 'Unità inserita con successo']);
             } else {
                 echo json_encode(['errore' => 'Errore durante l inserimento dell unità']);
