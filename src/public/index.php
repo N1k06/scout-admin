@@ -9,19 +9,23 @@ $routes = [
         '/api/articoli/{categoria}' => 'gestisci_articoli_per_categoria',
         '/api/articoli/{categoria}/{sottocategoria}' => 'gestisci_articoli_per_sottocategoria',
         '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'gestisci_articolo',
-        '/api/unita' => 'read_unita'
+        '/api/read_attivita/{id_attivita}' => 'read_attivita',
+        '/api/insert_attivita' => 'insert_attivita'
     ],
     'POST' => [
         '/api/auth' => 'gestisci_autenticazione',
         '/api/articoli' => 'crea_articolo',
-        '/api/unita' => 'insert_unita'
-        '/api/signup' => 'gestisci_signup'
-        '/api/login' => 'gestisci_login'
+        '/api/signup' => 'gestisci_signup',
+        '/api/login' => 'gestisci_login',
+        '/api/insert_account' => 'insert_account'
+        '/api/read_account' => 'read_account'
     ],
     'PUT' => [
-        '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'modifica_articolo',
-        '/api/unita/{id_unita}' => 'update_unita',
-        '/api/articoli' => 'update_articolo'
+        '/api/update_account' => 'update_account',
+        '/api/update_attivita' => 'update_attivita'
+    ],
+    'DELETE' => [
+        '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'elimina_articolo'
     ]
 ];
 

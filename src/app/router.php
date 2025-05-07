@@ -208,7 +208,17 @@ function update_account()
     echo json_encode("error");
 }
 
-function gestisci_attivita($id_attivita) 
+function insert_attivita()
+{
+
+}
+
+function update_attivita($id_attivita)
+{
+    
+}
+
+function read_attivita($id_attivita) 
 {
     global $conn;
 
