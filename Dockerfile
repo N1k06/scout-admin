@@ -1,5 +1,5 @@
-# Using the PHP 8.2 as Apache base image
-FROM php:8.2-apache
+# Using the PHP 8.4 as Apache base image
+FROM php:8.4-apache
 
 # Enable the Apache module rewrite
 RUN a2enmod rewrite

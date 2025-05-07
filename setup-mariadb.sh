@@ -20,7 +20,7 @@ sleep 10
 
 # Configura i permessi per l'accesso remoto a MariaDB 
 # attenzione al nome del container, verificarlo con "docker ps"
-docker exec -i  scout-admin-db-1 mariadb -u root -proot <<EOF
+docker exec -i scout-admin-db-1 mariadb -u root -proot <<EOF
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root';
 FLUSH PRIVILEGES;
 GRANT ALL PRIVILEGES ON *.* TO 'user'@'%' IDENTIFIED BY 'user';
@@ -30,7 +30,7 @@ echo "MariaDB setup complete."
 
 # Importa lo schema e i dati del database
 docker exec -i scout-admin-db-1 mariadb -u root -proot <./db/dumps/schema.sql
-echo "DB schema loaded."
+echo "DB all schema loaded."
 
 docker exec -i scout-admin-db-1 mariadb -u root -proot <./db/dumps/data.sql
 echo "DB populated."
