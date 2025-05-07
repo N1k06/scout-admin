@@ -18,8 +18,9 @@ function insert_account()
         $stmt->bindParam(':id_persona', $_POST['id_persona'], PDO::PARAM_INT);
         $stmt->execute();
     
-        if ($stmt->rowCount() > 0) {
-            echo json_encode("success");
+        if ($stmt->rowCount() > 0) 
+        {
+            echo json_encode($conn->lastInsertId());
             return;
         }
     }
@@ -32,7 +33,7 @@ function read_account()
 
     if (isset($_POST['username'])) 
     {
-        $query = "SELECT * FROM account WHERE username = :username";
+        $query = "SELECT * FROM Account WHERE username = :username";
         
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
@@ -68,7 +69,8 @@ function update_account()
         $stmt->bindParam(':id_persona', $_POST['id_persona'], PDO::PARAM_INT);
         $stmt->execute();
     
-        if ($stmt->rowCount() > 0) {
+        if ($stmt->rowCount() > 0) 
+        {
             echo json_encode("success");
             return;
         }
