@@ -130,10 +130,6 @@ require_once "db.php";
         http_response_code(404);
         echo "Risorsa non trovata";
     }
-?>
-
-
-
 
 function insert_account()
 {
