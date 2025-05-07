@@ -1,6 +1,4 @@
 <?php
-    require_once("db.php");
-
     //GET
     function gestisci_elenco_persone() 
     {
@@ -76,13 +74,13 @@
     }
 
     //PUT
-    function gestisci_persona($id) 
+    function aggiorna_persona($id) 
     {
         global $conn;
+        [$_POST, $_FILES] = request_parse_body();
 
         if(isset($_POST['nome']) || isset($_POST['cognome']) || isset($_POST['telefono']) || isset($_POST['via_residenza']) || isset($_POST['citta_residenza']) || isset($_POST['cap_residenza']))
         {
-            require_once("db.php");
             $stmt = $conn->prepare("SELECT nome, cognome, telefono, via_residenza, città_residenza, cap_residenza FROM Persona WHERE id = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
@@ -105,7 +103,6 @@
             $stmt = $conn->prepare("UPDATE Persona SET nome = ?, cognome = ?, telefono = ?, via_residenza = ?, citta_residenza = ?, cap_residenza = ? WHERE id = ?");
             $stmt->bind_param("sssssi", aux['nome'], aux['cognome'], aux['telefono'], aux['via_residenza'], aux['citta_residenza'], aux['cap_residenza'], $id);
             $stmt->execute();
-            $result = $stmt->get_result();
         }
     }
 

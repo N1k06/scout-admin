@@ -1,7 +1,5 @@
 <?php
 require_once '../app/router.php';
-require '../app/unita.php';
-//phpinfo();
 
 $routes = [
     'GET' => [
@@ -9,19 +7,23 @@ $routes = [
         '/api/articoli/{categoria}' => 'gestisci_articoli_per_categoria',
         '/api/articoli/{categoria}/{sottocategoria}' => 'gestisci_articoli_per_sottocategoria',
         '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'gestisci_articolo',
-        '/api/unita' => 'read_unita'
+        '/api/unita' => 'read_unita',
+        '/api/persone' => 'gestisci_elenco_persone',
+        '/api/persone/{id}' => 'gestisci_persone_per_id',
     ],
     'POST' => [
         '/api/auth' => 'gestisci_autenticazione',
         '/api/articoli' => 'crea_articolo',
-        '/api/unita' => 'insert_unita'
-        '/api/signup' => 'gestisci_signup'
-        '/api/login' => 'gestisci_login'
+        '/api/unita' => 'insert_unita',
+        '/api/signup' => 'gestisci_signup',
+        '/api/login' => 'gestisci_login',
+        '/api/persone' => 'inserimento_persone',
     ],
     'PUT' => [
         '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'modifica_articolo',
         '/api/unita/{id_unita}' => 'update_unita',
-        '/api/articoli' => 'update_articolo'
+        '/api/articoli' => 'update_articolo',
+        '/api/persone/{id}' => 'aggiorna_persona',
     ]
 ];
 
