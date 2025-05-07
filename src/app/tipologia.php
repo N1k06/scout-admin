@@ -36,8 +36,8 @@
 
     function read_tipologia(){
         include 'db.php';
-        $sql = "SELECT * FROM Unita";
-        $result = $connection->query($sql);
+        $sql = "SELECT * FROM Tipologia";
+        $result = $conn->query($sql);
         $data = [];
         if ($result->num_rows > 0) 
         {
@@ -49,38 +49,38 @@
         echo json_encode($data);
     }
 
-    function update_tipologia($id_unita) {
+    function update_tipologia($id_tipologia) {
         include 'db.php';
     
         $rawData = file_get_contents("php://input");
         $data = json_decode($rawData, true);
     
-        if (!isset($data['nome_unita'])) {
+        if (!isset($data['nome'])) {
             http_response_code(400);
-            echo json_encode(['errore' => 'Campo nome_unita mancante']);
+            echo json_encode(['errore' => 'Campo nome mancante']);
             return;
         }
     
-        if (!isset($data['id_branca'])) {
+        if (!isset($data['descrizione'])) {
             http_response_code(400);
-            echo json_encode(['errore' => 'Campo id_branca mancante']);
+            echo json_encode(['errore' => 'Campo descrizione mancante']);
             return;
         }
     
-        $nome_unita = $data['nome_unita'];
-        $id_branca = $data['id_branca'];
+        $nome = $data['nome'];
+        $descrizione = $data['descrizione'];
 
         
-        $sql_controll = "SELECT id_unita FROM Unita WHERE id_unita = '$id_unita'";
+        $sql_controll = "SELECT id_tipologia FROM Tipologia WHERE id_tipologia = '$id_tipologia'";
         $result = $conn->query($sql_controll);
 
         if ($result->num_rows == 0) {
             http_response_code(400);
-            echo json_encode(['errore' => 'Id_unita non esistente']);
+            echo json_encode(['errore' => 'Id_tipologia non esistente']);
 
         } else {
 
-            $sql = 'UPDATE Unita SET nome_unita = ?, id_branca = ? WHERE id_unita = ?';
+            $sql = 'UPDATE Tipologia SET nome = ?, descrizione = ? WHERE id_tipologia = ?';
             $stmt = $conn->prepare($sql);
     
             if ($stmt === false) {
@@ -89,7 +89,7 @@
                 return;
             }
     
-            $stmt->bind_param('sii', $nome_unita, $id_branca, $id_unita);
+            $stmt->bind_param('ssi', $nome, $descrizione, $id_tipologia);
             $successo = $stmt->execute();
     
             if ($successo) {

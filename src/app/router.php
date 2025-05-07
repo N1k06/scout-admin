@@ -350,6 +350,8 @@ function gestisci_signup()
     }
 }
 
+include 'tipologia.php';
+
 function update_articolo(){
     //prova parsing body della richiesta su PUT usando request_parse_body
     //richiesto php >= 8.4 
