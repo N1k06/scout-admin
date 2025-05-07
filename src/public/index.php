@@ -19,11 +19,10 @@ $routes = [
         '/api/login' => 'gestisci_login'
     ],
     'PUT' => [
-        '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'modifica_articolo'
-    ],
-    'PUT' => [
+        '/api/articoli/{categoria}/{sottocategoria}/{slug}' => 'modifica_articolo',
         '/api/unita/{id_unita}' => 'update_unita',
         '/api/articoli' => 'update_articolo'
+    ]
 ];
 
 $method = $_SERVER['REQUEST_METHOD'];
