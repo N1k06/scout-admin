@@ -1,6 +1,6 @@
 <html>
     <body>
-        <!--<form action="../api/persone" method="post">
+        <form action="../api/persone" method="post">
             <input type="text" name="nome" placeholder="Nome"><br>
             <input type="text" name="cognome" placeholder="Cognome"><br>
             <input type="date" name="data_nascita" placeholder="Data di Nascita"><br>
@@ -11,22 +11,44 @@
             <input type="text" name="cap_residenza" placeholder="CAP di Residenza"><br>
             <input type="text" name="id_tutore1" placeholder="id_tutore"><br>
             <button type="submit">Invia</button>
-        </form>-->
+        </form>
         <br>
         <br>
         <br>
-        <form action="../api/persone/1" method="put">
+        <form id="myForm">
             <input type="text" name="nome" placeholder="Nome"><br>
             <input type="text" name="cognome" placeholder="Cognome"><br>
             <input type="text" name="telefono" placeholder="Telefono"><br>
             <input type="text" name="via_residenza" placeholder="Via di Residenza"><br>
             <input type="text" name="citta_residenza" placeholder="Città di Residenza"><br>
             <input type="text" name="cap_residenza" placeholder="CAP di Residenza"><br>
-            <input type="text" name="id_tutore1" placeholder="id_tutore"><br>
             <button type="submit">Invia</button>
         </form>
-        <p id>
 
-        </p>
+        <script>
+            document.getElementById('myForm').addEventListener('submit', function (e) {
+              e.preventDefault();
+      
+              // Prendi i dati del form in modo generico
+              const form = e.target;
+              const formData = new FormData(form);
+              const data = {};
+      
+              formData.forEach((value, key) => {
+                data[key] = value;
+              });
+      
+              fetch('../api/persone/1', {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              })
+                .then(res => res.text())
+                .then(data => alert('Risposta: ' + data))
+                .catch(err => console.error('Errore:', err));
+            });
+          </script>
     </body>
 </html>

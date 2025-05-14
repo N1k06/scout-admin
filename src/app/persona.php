@@ -20,6 +20,7 @@
     function gestisci_persone_per_id($id) 
     {
         global $conn;
+        echo $_SERVER['REQUEST_METHOD'];
 
         $stmt = $conn->prepare("SELECT * FROM Persona WHERE id_persona = ?");
         $stmt->bind_param("i", $id);
@@ -77,11 +78,12 @@
     function aggiorna_persona($id) 
     {
         global $conn;
-        [$_POST, $_FILES] = request_parse_body();
+        $input = file_get_contents('php://input');
+        $input = json_decode($input, true);
 
-        if(isset($_POST['nome']) || isset($_POST['cognome']) || isset($_POST['telefono']) || isset($_POST['via_residenza']) || isset($_POST['citta_residenza']) || isset($_POST['cap_residenza']))
+        if(isset($input['nome']) || isset($input['cognome']) || isset($input['telefono']) || isset($input['via_residenza']) || isset($input['citta_residenza']) || isset($input['cap_residenza']))
         {
-            $stmt = $conn->prepare("SELECT nome, cognome, telefono, via_residenza, città_residenza, cap_residenza FROM Persona WHERE id = ?");
+            $stmt = $conn->prepare("SELECT nome, cognome, telefono, via_residenza, citta_residenza, cap_residenza FROM Persona WHERE id_persona = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -89,19 +91,19 @@
             $aux = array();
             while ($row = $result->fetch_assoc()) 
             {
-                $aux[] = $row;
+                $aux = $row;
             }
 
-            foreach($_POST as $key => $value)
+            foreach($input as $key => $value)
             {
-                if(isset(aux[$key]))
+                if(isset($aux[$key]))
                 {
-                    $aux[$key] = $_POST[$key];
+                    $aux[$key] = $input[$key];
                 }
             }
 
-            $stmt = $conn->prepare("UPDATE Persona SET nome = ?, cognome = ?, telefono = ?, via_residenza = ?, citta_residenza = ?, cap_residenza = ? WHERE id = ?");
-            $stmt->bind_param("sssssi", aux['nome'], aux['cognome'], aux['telefono'], aux['via_residenza'], aux['citta_residenza'], aux['cap_residenza'], $id);
+            $stmt = $conn->prepare("UPDATE Persona SET nome = ?, cognome = ?, telefono = ?, via_residenza = ?, citta_residenza = ?, cap_residenza = ? WHERE id_persona = ?");
+            $stmt->bind_param("ssssssi", $aux['nome'], $aux['cognome'], $aux['telefono'], $aux['via_residenza'], $aux['citta_residenza'], $aux['cap_residenza'], $id);
             $stmt->execute();
         }
     }
