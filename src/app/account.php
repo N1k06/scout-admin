@@ -52,6 +52,8 @@ function update_account()
 {
     global $conn;
 
+    [$_POST, $_FILES] = request_parse_body();
+
     if (isset($_POST['email']) && 
         isset($_POST['password']) && 
         isset($_POST['old_username']) && 

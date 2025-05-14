@@ -45,20 +45,13 @@ function update_attivita()
        isset($_POST["luogo_arrivo"]) &&
        isset($_POST["id_attivita"]))
     {
-        $nome = $_POST["nome"];
-        $data = $_POST["data"];
-        $id_persona = $_POST["id_persona"];
-        $luogo_partenza = $_POST["luogo_partenza"];
-        $luogo_arrivo = $_POST["luogo_arrivo"];
-        $id_attivita = $_POST["id_attivita"];
-
-        $query = "UPDATE Attivita SET nome = :nome, data = :data, luogo_partenza = :luogo_partenza, luogo_arrivo = :luogo_arrivo WHERE id_attivita = :id";
+        $query = "UPDATE Attivita SET nome = :nome, data = :data, luogo_partenza = :luogo_partenza, luogo_arrivo = :luogo_arrivo WHERE id_attivita = :id_attivita";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
-        $stmt->bindParam(':data', $data, PDO::PARAM_STR);
-        $stmt->bindParam(':luogo_partenza', $luogo_partenza, PDO::PARAM_STR);
-        $stmt->bindParam(':luogo_arrivo', $luogo_arrivo, PDO::PARAM_STR);
-        $stmt->bindParam(':id', $id_attivita, PDO::PARAM_INT);
+        $stmt->bindParam(':nome', $_POST["nome"], PDO::PARAM_STR);
+        $stmt->bindParam(':data', $_POST["data"];, PDO::PARAM_STR);
+        $stmt->bindParam(':luogo_partenza', $_POST["luogo_partenza"], PDO::PARAM_STR);
+        $stmt->bindParam(':luogo_arrivo', $_POST["luogo_arrivo"], PDO::PARAM_STR);
+        $stmt->bindParam(':id_attivita', $_POST["id_attivita"], PDO::PARAM_INT);
         $stmt->execute();
     
         if ($stmt->rowCount() > 0) 
