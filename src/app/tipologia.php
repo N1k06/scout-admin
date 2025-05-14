@@ -2,17 +2,18 @@
     function insert_tipologia(){ 
         include 'db.php';
 
-        
-        if (!isset($_POST['nome'])) {
+        $json_data = file_get_contents('php://input');
+        $data = json_decode($json_data, true);
+
+        if (!isset($data['nome']) || trim($data['nome']) === '') {
             http_response_code(400);
-            echo json_encode(['errore' => 'Campo Nome mancante']);
+            echo json_encode(['errore' => 'Campo Nome mancante o vuoto']);
             return;
         }
         
-        $nome = $_POST['nome'];
-        $descrizione = isset($_POST['descrizione']) ? $_POST['descrizione'] : null;
+        $nome = $data['nome'];
+        $descrizione = isset($data['descrizione']) ? $data['descrizione'] : null;
     
-        // Controlla se il nome esiste già usando prepared statement
         $stmt = $conn->prepare("SELECT nome FROM Tipologia WHERE nome = ?");
         $stmt->bind_param("s", $nome);
         $stmt->execute();
@@ -24,8 +25,9 @@
             // Inserisce il nuovo valore
             $stmt_insert = $conn->prepare("INSERT INTO Tipologia (nome, descrizione) VALUES (?, ?)");
             $stmt_insert->bind_param("ss", $nome, $descrizione);
+            $success = $stmt_insert->execute();
 
-            if ($conn->query($stmt_insert) === TRUE) {
+            if ($success == TRUE) {
                 echo json_encode(['stato' => 'ok', 'messaggio' => 'Unità inserita con successo']);
             } else {
                 echo json_encode(['errore' => 'Errore durante l inserimento dell unità']);
