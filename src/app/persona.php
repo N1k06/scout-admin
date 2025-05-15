@@ -1,4 +1,6 @@
 <?php
+    require_once "ausiliar_function.php";
+
     //GET
     function gestisci_elenco_persone() 
     {
@@ -71,18 +73,40 @@
         {
             gestisci_richiesta_non_valida();
         }
+        
+        controllo_integrita_perosna($POST);
 
         $stmt = $conn->prepare("INSERT INTO Persona (nome, cognome, data_nascita, luogo_nascita, telefono, via_residenza, citta_residenza, cap_residenza, id_tutore1) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssssi", $POST['nome'], $POST['cognome'], $POST['data_nascita'], $POST['luogo_nascita'], $POST['telefono'], $POST['via_residenza'], $POST['citta_residenza'], $POST['cap_residenza'], $id_tutore);
         $stmt->execute();  
     }
 
+    function controllo_integrita_perosna($Persona)
+    {
+        $Persona['telefono'] = preg_replace('/\D/', '', $Persona['telefono']);
+        if(!is_valid_phone($POST['telefono']))
+        {
+            gestisci_richiesta_non_valida() 
+        }
+
+        $Persona['cap_residenza'] = preg_replace('/\D/', '', $Persona['cap_residenza']);
+        if(!is_valid_cap($POST['cap_residenza']))
+        {
+            gestisci_richiesta_non_valida() 
+        }
+
+        if(!is_valid_date($POST['data_nascita']))
+        {
+            gestisci_richiesta_non_valida() 
+        }
+    }
+
     //PUT
     function aggiorna_persona($id) 
     {
         global $conn;
-        $input = file_get_contents('php://input');
-        $input = json_decode($input, true);
+        $PUT = file_get_contents('php://input');
+        $input = json_decode($PUT, true);
 
         if(isset($input['nome']) || isset($input['cognome']) || isset($input['telefono']) || isset($input['via_residenza']) || isset($input['citta_residenza']) || isset($input['cap_residenza']))
         {
