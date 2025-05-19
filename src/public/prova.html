@@ -40,6 +40,7 @@
         <br>
         <br>
         <br>
+        Chi vuoi modificare: <input type="text" id="id" placeholder="ID persona"><br>
         <form id="putForm">
             <input type="text" name="nome" placeholder="Nome"><br>
             <input type="text" name="cognome" placeholder="Cognome"><br>
@@ -58,12 +59,16 @@
               const form = e.target;
               const formData = new FormData(form);
               const data = {};
+              const str = '../api/persone/' + document.getElementById('id').value;
       
-              formData.forEach((value, key) => {
-                data[key] = value;
+              formData.forEach((value, key) => 
+              {
+                if(value != "")
+                {
+                  data[key] = value;
+                }
               });
-      
-              fetch('../api/persone/1', {
+              fetch(str, {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json'

@@ -8,10 +8,18 @@
 
     function is_valid_phone($phone) 
     {
-        return if(strlen($phone) == 10, true, false);
+        if(strlen($phone) == 10)
+        {
+            return true;
+        }
+        return false;
     }
 
     function is_valid_cap($cap) 
     {
-        return if(strlen($cap) == 5, true, false);
+        if(strlen($cap) == 5)
+        {
+            return true;
+        }
+        return false;
     }

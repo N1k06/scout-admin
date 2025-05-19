@@ -74,30 +74,29 @@
             gestisci_richiesta_non_valida();
         }
         
-        controllo_integrita_perosna($POST);
+        //controllo_integrita_perosna($POST);
 
         $stmt = $conn->prepare("INSERT INTO Persona (nome, cognome, data_nascita, luogo_nascita, telefono, via_residenza, citta_residenza, cap_residenza, id_tutore1) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssssi", $POST['nome'], $POST['cognome'], $POST['data_nascita'], $POST['luogo_nascita'], $POST['telefono'], $POST['via_residenza'], $POST['citta_residenza'], $POST['cap_residenza'], $id_tutore);
         $stmt->execute();  
     }
-
     function controllo_integrita_perosna($Persona)
     {
         $Persona['telefono'] = preg_replace('/\D/', '', $Persona['telefono']);
         if(!is_valid_phone($POST['telefono']))
         {
-            gestisci_richiesta_non_valida() 
+            gestisci_richiesta_non_valida();
         }
 
         $Persona['cap_residenza'] = preg_replace('/\D/', '', $Persona['cap_residenza']);
         if(!is_valid_cap($POST['cap_residenza']))
         {
-            gestisci_richiesta_non_valida() 
+            gestisci_richiesta_non_valida();
         }
 
         if(!is_valid_date($POST['data_nascita']))
         {
-            gestisci_richiesta_non_valida() 
+            gestisci_richiesta_non_valida();
         }
     }
 
@@ -115,11 +114,7 @@
             $stmt->execute();
             $result = $stmt->get_result();
 
-            $aux = array();
-            while ($row = $result->fetch_assoc()) 
-            {
-                $aux = $row;
-            }
+            $aux = $result->fetch_assoc();
 
             foreach($input as $key => $value)
             {
