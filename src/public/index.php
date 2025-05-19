@@ -26,8 +26,8 @@ $routes = [
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
-//echo "Metodo: " . $method . "<br>";
-//echo "URI: " . $uri . "<br>";
+echo "Metodo: " . $method . "<br>";
+echo "URI: " . $uri . "<br>";
 
 router($method, $uri, $routes);
 ?>
