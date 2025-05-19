@@ -9,11 +9,9 @@ function read_servizio()
     isset($_POST["id_tipologia"]) && 
     isset($_POST["id_unita"]))
     {
-        $stmt->prepare("SELECT * FROM Servizio WHERE anno_associativo = :anno_associativo AND id_persona = :id_persona AND id_tipologia = :id_tipologia AND id_unita = :id_unita");
+        $stmt->prepare("SELECT * FROM Servizio WHERE anno_associativo = :anno_associativo AND id_persona = :id_persona");
         $stmt->bindParam(":anno_associativo", $_POST["anno_associativo"], PDO::PARAM_INT);
         $stmt->bindParam(":id_persona", $_POST["id_persona"], PDO::PARAM_INT);
-        $stmt->bindParam(":id_tipologia", $_POST["id_tipologia"], PDO::PARAM_INT);
-        $stmt->bindParam(":id_unita", $_POST["id_unita"], PDO::PARAM_INT);
         $stmt->execute();
 
         if ($row = $stmt->fetch(PDO::FETCH_ASSOC))
