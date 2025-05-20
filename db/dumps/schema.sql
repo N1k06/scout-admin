@@ -23,7 +23,7 @@ CREATE TABLE Persona (
     via_residenza VARCHAR(50) NOT NULL,
     cap_residenza VARCHAR(6) NOT NULL,
     telefono VARCHAR(15) NOT NULL,
-    id_tutore1 INT NOT NULL,
+    id_tutore1 INT DEFAULT NULL,
     id_tutore2 INT DEFAULT NULL
 );
 
