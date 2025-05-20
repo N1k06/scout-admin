@@ -30,6 +30,7 @@ require_once "db.php";
 
                     if ($match) 
                     {
+                        //if canAccessTable($user_type, $route)
                         call_user_func_array($handler, $params);
                         return;
                     }
