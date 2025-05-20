@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrazione Scout - Pagina 1/2</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #2E7D32;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, rgba(46, 125, 50, 0.9) 0%, rgba(27, 94, 32, 0.95) 100%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,70 Q50,30 70,70 Q60,60 50,65 Q40,60 30,70" fill="%23237420" opacity="0.3"/></svg>');
+            background-size: 200px, 300px;
+            z-index: -1;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-img {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 10px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+        }
+        .logo-text {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8rem;
+            color: #FFEB3B;
+            text-shadow: 
+                3px 3px 0 #FF5722,
+                5px 5px 0 rgba(0,0,0,0.2);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .logo-subtext {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1rem;
+            color: #FFC107;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            font-weight: bold;
+            position: relative;
+        }
+        .step.active {
+            background: #FFC107;
+            color: #5D4037;
+        }
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background: rgba(255,255,255,0.2);
+            left: 30px;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            transition: all 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #FFEB3B;
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 0 0 3px rgba(255, 235, 59, 0.2);
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .btn-next {
+            background: linear-gradient(135deg, #FFC107, #FF9800);
+            color: #5D4037;
+        }
+        .btn-next:hover {
+            background: linear-gradient(135deg, #FF9800, #FFC107);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        .logo-img {
+            animation: bounce 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <header>
+            <h1 class="logo-text">SCOUTIFY</h1>
+            <p class="logo-subtext">POWERED BY 5CM</p>
+        </header>
+
+        <div class="progress-steps">
+            <div class="step active">1</div>
+            <div class="step">2</div>
+        </div>
+
+        <section class="form-container">
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Il tuo nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" name="cognome" placeholder="Il tuo cognome" required>
+                </div>
+                <div class="form-group">
+                    <label for="data_nascita">Data di Nascita:</label>
+                    <input type="date" id="data_nascita" name="data_nascita" required>
+                </div>
+                <div class="form-group">
+                    <label for="luogo_nascita">Luogo di Nascita:</label>
+                    <input type="text" id="luogo_nascita" name="luogo_nascita" placeholder="Città di nascita" required>
+                </div>
+
+                <div class="btn-container" id="btnContainer">
+                    <a class="btn btn-next" id="a">Continua</a>
+                </div>
+            </form>
+        </section>
+
+        <script>
+            const mappa = new Map();
+
+            document.addEventListener("DOMContentLoaded", function () 
+            {
+                const form = document.getElementById("registrationForm");
+                const linkContinua = document.getElementById("a");
+
+                linkContinua.addEventListener("click", function (e) 
+                {
+                    e.preventDefault(); // Previene il redirect
+
+                    mappa.set("nome", document.getElementById("nome").value);
+                    mappa.set("cognome", document.getElementById("cognome").value);
+                    mappa.set("data_nascita", document.getElementById("data_nascita").value);
+                    mappa.set("luogo_nascita", document.getElementById("luogo_nascita").value);
+
+                    console.log(mappa);
+
+                    // 2. Svuota il form e mostra nuovi contenuti
+                    form.innerHTML = `
+                        <div class="form-group">
+                            <label for="telefono">Telefono:</label>
+                            <input type="tel" id="telefono" name="telefono" placeholder="Numero di telefono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="via_residenza">Via di Residenza:</label>
+                            <input type="text" id="via_residenza" name="via_residenza" placeholder="Indirizzo di residenza" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="citta_residenza">Città di Residenza:</label>
+                            <input type="text" id="citta_residenza" name="citta_residenza" placeholder="Città di residenza" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cap_residenza">CAP di Residenza:</label>
+                            <input type="text" id="cap_residenza" name="cap_residenza" placeholder="Codice postale" required>
+                        </div>
+
+                        <div class="btn-container" id="btnContainer">
+                            <a class="btn btn-next" id="a">Continua</a>
+                        </div>`;
+                    
+                    // Rinnova il listener per il nuovo form
+                    const linkContinua = document.getElementById("a");
+                    linkContinua.addEventListener("click", function (e) 
+                    {
+                        e.preventDefault(); // Previene il redirect
+                        mappa.set("telefono", document.getElementById("telefono").value);
+                        mappa.set("via_residenza", document.getElementById("via_residenza").value);
+                        mappa.set("citta_residenza", document.getElementById("citta_residenza").value);
+                        mappa.set("cap_residenza", document.getElementById("cap_residenza").value);
+
+                        console.log(mappa);
+
+                        // 2. Svuota il form e mostra nuovi contenuti
+                        form.innerHTML = `
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" id="username" name="username" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd1">Password:</label>
+                                <input type="password" id="pwd1" name="pwd1" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd2">Conferma password:</label>
+                                <input type="password" id="pwd2" name="pwd2" placeholder="Conferma password" required>
+                            </div>
+
+                            <div class="btn-container" id="btnContainer">
+                                <a class="btn btn-next" id="a">Continua</a>
+                            </div>`;
+
+                        // Rinnova il listener per il nuovo form
+                        const linkContinua = document.getElementById("a");
+                        linkContinua.addEventListener("click", function (e) 
+                        {
+                            e.preventDefault(); // Previene il redirect
+                            if (document.getElementById("pwd1").value == document.getElementById("pwd2").value)
+                            {
+                                mappa.set("username", document.getElementById("username").value);
+                                mappa.set("email", document.getElementById("email").value);
+                                mappa.set("pwd", document.getElementById("pwd1").value);
+                                console.log(mappa);
+
+                                // Converting the Map to an object
+                                const mappaObj = Object.fromEntries(mappa);
+
+                                // Creare il corpo della richiesta come JSON
+                                fetch('https://example.com/api', 
+                                {
+                                    method: 'POST',
+                                    headers: 
+                                    {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(mappaObj) // Convertiamo in JSON
+                                })
+                                .then(response => response.json())
+                                .then(data => console.log(data))
+                                .catch(error => console.error('Errore:', error));
+                            }
+                        });
+                    });
+                });
+            });
+
+        </script>
+    </div>
+</body>
+</html>
