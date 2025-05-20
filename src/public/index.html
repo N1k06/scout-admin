@@ -33,8 +33,6 @@
       <form id="putForm">
         Nome: <input type="text" name="nome" placeholder="Nome"><br>
         Cognome: <input type="text" name="cognome" placeholder="Cognome"><br>
-        Data di nascita: <input type="date" name="data_nascita" placeholder="Data di Nascita"><br>
-        Luogo di nascita: <input type="text" name="luogo_nascita" placeholder="Luogo di Nascita"><br>
         Num. di telefono: <input type="text" name="telefono" placeholder="Telefono"><br>
         Via di residenza: <input type="text" name="via_residenza" placeholder="Via di Residenza"><br>
         Città di residenza: <input type="text" name="citta_residenza" placeholder="Città di Residenza"><br>
@@ -45,6 +43,92 @@
       <table id="data_table">
       </table>
 
-      <script src="file_script.js"></script>
+      <script>
+        document.getElementById('getForm').addEventListener('submit', function (e) 
+        {
+          e.preventDefault();
+
+          // Prendi i dati del form in modo generico
+          const form = e.target;
+          const formData = new FormData(form);
+          const data = {};
+          formData.forEach((value, key) => {
+            data[key] = value;
+          });
+
+          let str = "";
+
+          if(data.id != "")
+          {
+            str = '../api/persone/' + data.id;
+          }
+          else
+          {
+            str = '../api/persone';
+          }
+
+          fetch(str, {
+             method: 'GET'
+            })
+              .then(res => res.text())
+              .then(data => alert('Risposta: ' + data))
+              .catch(err => console.error('Errore:', err));
+              populateTable(data);
+        });
+
+        document.getElementById('postForm').addEventListener('submit', function (e) 
+        {
+            e.preventDefault();
+
+            // Prendi i dati del form in modo generico
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = {};
+
+            formData.forEach((value, key) => {
+              data[key] = value;
+            });
+
+            fetch('../api/persone', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            })
+              .then(res => res.text())
+              .then(data => alert('Risposta: ' + data))
+              .catch(err => console.error('Errore:', err));
+          });
+
+        document.getElementById('putForm').addEventListener('submit', function (e) 
+        {
+            e.preventDefault();
+
+            // Prendi i dati del form in modo generico
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = {};
+            const str = '../api/persone/' + document.getElementById('id').value;
+
+            formData.forEach((value, key) => 
+            {
+              if(value != "")
+              {
+                data[key] = value;
+              }
+            });
+            fetch(str, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            })
+              .then(res => res.text())
+              .then(data => alert('Risposta: ' + data))
+              .catch(err => console.error('Errore:', err));
+          });
+      </script>
     </body>
 </html>
