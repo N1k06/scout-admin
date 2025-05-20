@@ -47,3 +47,6 @@ INSERT INTO Iter(nome, id_branca) VALUES
 
 -- 7. RS:
 ('responsabile', 7);
+
+INSERT INTO Tipologia (nome,descrizione) VALUES 
+('Marco','minorenne');

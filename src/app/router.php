@@ -30,9 +30,13 @@ require_once "db.php";
 
                     if ($match) 
                     {
-                        //if canAccessTable($user_type, $route)
-                        call_user_func_array($handler, $params);
-                        return;
+                        if (canAccessTable($user_type, $route) == true)
+                        {
+                            call_user_func_array($handler, $params);
+                            return;
+                        }
+                        die("Accesso non autorizzato", conn->connection_error);
+                        
                     }
                 }
             }
