@@ -4,8 +4,7 @@ function read_iscrizione()
 {
     global $conn;
     
-    if (isset($_POST["id_persona"]) && 
-    isset($_POST["anno_associativo"]))
+    if (isset($_POST["id_persona"]) && isset($_POST["anno_associativo"]))
     {
         $stmt->prepare("SELECT * FROM Iscrizione WHERE anno_associativo = :anno_associativo AND id_persona = :id_persona");
         $stmt->bindParam(":anno_associativo", $_POST["anno_associativo"], PDO::PARAM_INT);  
