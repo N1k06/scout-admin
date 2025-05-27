@@ -27,10 +27,10 @@ function canAccessTable($user_type, $functionName) {
                 '/api/iscrizione' => ['read_iscrizione'],
              ],
              'maggiorenne' => [
-                '/api/account' => ['insert_account', 'update_account','read_account'],
-                '/api/persona' => ['insert_persona', 'update_persona','read_persona'],
+                 '/api/account' => ['insert_account', 'update_account','read_account'],
+                 '/api/persona' => ['insert_persona', 'update_persona','read_persona'],
                 '/api/iscrizione' => ['read_iscrizione']
-            ]
+             ]
     ];
 
     if (isset($permissions[$user_type]) && in_array($functionName, $permissions[$user_type])) { //in_array(mixed $needle, array $haystack, bool $strict = false): bool
