@@ -1,41 +1,62 @@
-# Configurazione MariaDB e phpMyAdmin con Docker su NixOS
+Requisiti funzionali dell’applicazione web “Scout-Admin”
 
-Dockerfile e docker-compose.yml presi da [qui](https://github.com/br0kenpixel/xampp2docker)
-e personalizzati per funzionare "out of the box" su Project IDX (NixOS).
+L’applicazione web Scout-Admin è stata progettata con l’obiettivo principale di facilitare la gestione dei dati anagrafici e delle attività dei membri iscritti a un gruppo scout. L’app intende semplificare e centralizzare la gestione delle informazioni relative agli utenti, alle persone e alle attività del gruppo, attraverso un’interfaccia web intuitiva e un backend strutturato secondo principi RESTful.
 
-## Obiettivo
-Configurare un ambiente di sviluppo cloud per web-app con MariaDB e phpMyAdmin utilizzando Docker, assicurando che:
-- Il DB sia accessibile da remoto con PHPMyAdmin.
-- L'ambiente funzioni correttamente su NixOS.
-- Sia possibile accedere a qualsiasi risorsa presente nel server accedendo alla specifica porta (3000).
+Funzionalità principali:
+1-Gestione utenti e account:
+-Creazione di un account personale per i genitori o per i membri maggiorenni.
+-Autenticazione tramite credenziali (login sicuro).
+-Possibilità per l’utente di aggiornare e modificare autonomamente i propri dati personali.
 
-Nota: potrebbe essere necessario rendere pubblici i link di accesso nella sezione "Backend Ports".
+2-Gestione delle persone iscritte:
+-Inserimento dei dati anagrafici e dei dettagli personali degli iscritti al gruppo scout.
+-Visualizzazione completa delle informazioni relative a ciascun iscritto (accessibile solo al personale autorizzato).
+-Modifica delle informazioni già presenti nel sistema.
 
-## Modifiche principali
+3.Gestione delle attività scout:
+-Visualizzazione del calendario e dei dettagli delle attività programmate.
+-Associazione di persone specifiche ad attività, unità e branche di appartenenza.
+-Tracciamento della partecipazione degli utenti alle varie iniziative scout.
 
-### 1. **File `dev.nix`**
-Il file `dev.nix` è stato configurato per:
-- Installare Docker e Docker Compose.
-- Abilitare il servizio Docker.
-- Eseguire uno script personalizzato all'avvio del workspace per configurare MariaDB.
 
-### 2. **Script `setup-mariadb.sh`**
-Questo script:
-1. Rimuove e ricrea la directory `mariadb_run` per evitare conflitti con i permessi di MariaDB.
-2. Avvia i container definiti in `docker-compose.yml`.
-3. Configura MariaDB per accettare connessioni da qualsiasi host (`%`).
-4. Configura Apache per servire anche file senza estensione php (utile per alcuni progetti, ad esempio link shortener) trasferendo il file `.htaccess`.
+Architettura e organizzazione dell’applicazione
 
-### 3. **File di configurazione `Docker`**
-- `docker-compose.yml` è stato adattato per consentire l'avvio di MariaDB ed evitare problemi di permessi su NixOS (cartella `mariadb_run`)
-- `Dockefile` è stato modificato per installare il gestore pacchetti di PHP (composer)
 
-## Integrazione con Github
-Se il push automatico fallisce, loggarsi manualmente da terminale con `gh auth login`, e successivamente dare `git push` sempre dalla shell.
-Può essere d'aiuto resettare l'istanza dopo aver eseguito il login da terminale.
+L’app è costruita secondo un’architettura client-server e fa uso di un’API REST per la comunicazione tra frontend e backend.
 
-## Lanciare terminale dentro un container
-In certi casi può essere utile eseguire dei comandi dal terminale dentro ai container. In tal caso, dopo aver preso gli id o i nomi dei container con `docker ps`, eseguire
-`docker exec -it <container-name-or-id> bash`
-Di solito il nome è il seguente:
-`docker exec -it docker-xammp-ws-php-app-1 bash`
+Frontend (Client):
+Realizzato con tecnologie web standard: HTML, CSS e JavaScript.
+Utilizza la Fetch API per l’invio e la ricezione di dati in formato JSON verso e dal server.
+Il file script.js è responsabile dell’invio dei dati (es. una nuova persona) tramite chiamata HTTP POST e della ricezione dei dati da visualizzare dinamicamente in tabelle HTML.
+
+Backend (Server):
+Scritto in PHP e ospitato tramite Firebase Studio con supporto per backend PHP personalizzato.
+È presente un file router.php, che agisce come router personalizzato per la gestione delle richieste HTTP in ingresso (GET, POST, PUT), smistandole verso le funzioni appropriate.
+
+Funzioni principali del backend:
+-gestisci_elenco_persone(): restituisce l’elenco completo delle persone registrate (metodo GET).
+-gestisci_persone_per_id($id): restituisce i dettagli di una persona specifica identificata tramite ID (metodo GET).
+-inserimento_persone(): consente di inserire una nuova persona nel database (metodo POST).
+-gestisci_login() / gestisci_signup(): gestiscono rispettivamente login e registrazione degli utenti.
+-gestisci_attività($id): recupera e restituisce i dettagli di una determinata attività tramite ID.
+
+
+Database relazionale
+Il database utilizzato è MySQL e lo schema è definito all’interno di un file schema.sql.
+Le principali tabelle relazionali comprendono: Persona, Account, Attività, e altre eventualmente necessarie per le relazioni (es. partecipazioni, ruoli, unità, branche).Le query vengono eseguite in maniera sicura utilizzando prepared statements (tramite estensioni PDO o mysqli di PHP), in modo da prevenire vulnerabilità comuni come SQL Injection.
+
+Routing e API REST
+L’app utilizza un’architettura RESTful per gestire le comunicazioni tra frontend e backend. Le principali rotte sono:
+-GET /api/persone: restituisce l’elenco completo delle persone registrate.
+-GET /api/persone/{id}: restituisce i dati di una persona specifica.
+-POST /api/persone: inserisce una nuova persona nel database.
+-PUT /api/persone/{id}: aggiorna i dati di una persona esistente.
+Le richieste sono gestite dal file router.php, che smista le chiamate HTTP verso le funzioni PHP appropriate.
+
+
+
+
+
+
+
+
